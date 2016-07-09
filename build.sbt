@@ -11,6 +11,7 @@ lazy val commonModel =
   DefProject("common-model")
     .settings(
       libraryDependencies ++= Seq(
-        Deps.CatsCore(Versions.Cats)
+        Deps.CatsCore(Versions.Cats),
+        Deps.ScalaTest(Versions.ScalaTest) % Test
       )
     )
