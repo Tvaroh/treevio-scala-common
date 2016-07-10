@@ -15,3 +15,15 @@ lazy val commonModel =
         Deps.ScalaTest(Versions.ScalaTest) % Test
       )
     )
+
+lazy val commonTest =
+  DefProject("common-test")
+    .dependsOn(commonModel)
+    .settings(
+      libraryDependencies ++= Seq(
+        Deps.ScalaTest(Versions.ScalaTest),
+        Deps.ScalaCheck(Versions.ScalaCheck),
+        Deps.Mockito(Versions.Mockito),
+        Deps.JUnit(Versions.JUnit) % Provided
+      )
+    )
