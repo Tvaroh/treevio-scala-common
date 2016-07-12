@@ -12,6 +12,8 @@ lazy val commonModel =
     .settings(
       libraryDependencies ++= Seq(
         Deps.CatsCore(Versions.Cats),
+        Deps.TypesafeConfig(Versions.TypesafeConfig),
+        Deps.Slf4jApi(Versions.Slf4j), Deps.Logback(Versions.Logback), Deps.ScalaLogging(Versions.ScalaLogging),
         Deps.ScalaTest(Versions.ScalaTest) % Test
       )
     )
