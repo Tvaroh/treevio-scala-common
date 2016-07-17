@@ -12,7 +12,7 @@ object Async extends AsyncInstances {
 
 }
 
-private class AsyncImpl[A](val _run: () => Future[A]) extends Async[A] {
+private class AsyncImpl[A](_run: () => Future[A]) extends Async[A] {
 
   override def run(): Future[A] = _run()
 
