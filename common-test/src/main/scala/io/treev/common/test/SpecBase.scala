@@ -11,7 +11,8 @@ trait SpecBase
     with Checkers
     with ScalaFutures
     with MockitoSugar
-    with PatienceConfig {
+    with PatienceConfig
+    with Generators {
 
   protected implicit val effectivePatience: PatienceConfig = defaultPatience
 
