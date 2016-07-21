@@ -7,11 +7,20 @@ organization in ThisBuild := s"$DefaultOrganization.common"
 
 CommonSettings
 
-lazy val commonModel =
-  DefProject("common-model")
+lazy val commonApi =
+  DefProject("common-api")
     .settings(
       libraryDependencies ++= Seq(
         Deps.CatsCore(Versions.Cats),
+        Deps.ScalaTest(Versions.ScalaTest) % Test
+      )
+    )
+
+lazy val commonImpl =
+  DefProject("common-impl")
+    .dependsOn(commonApi)
+    .settings(
+      libraryDependencies ++= Seq(
         Deps.TypesafeConfig(Versions.TypesafeConfig),
         Deps.Slf4jApi(Versions.Slf4j), Deps.Logback(Versions.Logback), Deps.ScalaLogging(Versions.ScalaLogging),
         Deps.AkkaActor(Versions.Akka) % Provided,
@@ -21,7 +30,7 @@ lazy val commonModel =
 
 lazy val commonTest =
   DefProject("common-test")
-    .dependsOn(commonModel)
+    .dependsOn(commonImpl)
     .settings(
       libraryDependencies ++= Seq(
         Deps.ScalaTest(Versions.ScalaTest),
