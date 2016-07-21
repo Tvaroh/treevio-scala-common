@@ -14,6 +14,7 @@ lazy val commonModel =
         Deps.CatsCore(Versions.Cats),
         Deps.TypesafeConfig(Versions.TypesafeConfig),
         Deps.Slf4jApi(Versions.Slf4j), Deps.Logback(Versions.Logback), Deps.ScalaLogging(Versions.ScalaLogging),
+        Deps.AkkaActor(Versions.Akka) % Provided,
         Deps.ScalaTest(Versions.ScalaTest) % Test
       )
     )
