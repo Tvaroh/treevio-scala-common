@@ -20,11 +20,11 @@ class AsyncCassandraApi(configuration: CassandraApiConfiguration)
   import AsyncCassandraApi._
 
   override def start()(implicit ec: ExecutionContext): Async[Unit] =
-    {
+    Async {
       session
       preparedStatementCache
       ()
-    }.pure[Async]
+    }
 
   override def stop()(implicit ec: ExecutionContext): Async[Unit] =
     for {

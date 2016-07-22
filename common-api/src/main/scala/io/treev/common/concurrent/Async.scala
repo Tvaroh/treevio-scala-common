@@ -1,6 +1,6 @@
 package io.treev.common.concurrent
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 trait Async[+A] {
   def run(): Future[A]
@@ -9,6 +9,7 @@ trait Async[+A] {
 object Async extends AsyncInstances {
 
   def apply[A](run: () => Future[A]): Async[A] = new AsyncImpl(run)
+  def apply[A](comp: => A)(implicit ec: ExecutionContext): Async[A] = new AsyncImpl(() => Future(comp))
 
 }
 
