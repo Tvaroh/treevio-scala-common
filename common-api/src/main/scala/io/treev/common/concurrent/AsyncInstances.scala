@@ -41,6 +41,8 @@ private class AsyncFunctor(implicit ec: ExecutionContext) extends Functor[Async]
 private class AsyncApplicative(implicit ec: ExecutionContext) extends Applicative[Async] {
   override def pure[A](a: A): Async[A] =
     Async(() => Future.successful(a))
+  override def pureEval[A](a: Eval[A]): Async[A] =
+    Async(() => Future(a.value))
   override def ap[A, B](ff: Async[A => B])(fa: Async[A]): Async[B] =
     Async(() => fa.run().flatMap(a => ff.run().map(_(a))))
 }

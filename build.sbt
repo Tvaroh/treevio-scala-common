@@ -12,6 +12,7 @@ lazy val commonApi =
     .settings(
       libraryDependencies ++= Seq(
         Deps.CatsCore(Versions.Cats),
+        Deps.AkkaStream(Versions.Akka),
         Deps.ScalaTest(Versions.ScalaTest) % Test
       )
     )
@@ -25,6 +26,8 @@ lazy val commonImpl =
         Deps.Slf4jApi(Versions.Slf4j), Deps.Logback(Versions.Logback), Deps.ScalaLogging(Versions.ScalaLogging),
         Deps.CirceCore(Versions.Circe) % Provided,
         Deps.AkkaHttp(Versions.Akka) % Provided,
+        Deps.CassandraDriver(Versions.CassandraDriver) % Provided,
+        Deps.ScalaCacheCore(Versions.ScalaCache) % Provided,
         Deps.ScalaTest(Versions.ScalaTest) % Test
       )
     )
