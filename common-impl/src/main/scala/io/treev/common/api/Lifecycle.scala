@@ -6,7 +6,7 @@ import scala.concurrent.ExecutionContext
 
 trait Lifecycle {
 
-  def start(implicit ec: ExecutionContext): Async[Unit] = Async.unit
-  def stop(implicit ec: ExecutionContext): Async[Unit] = Async.unit
+  def start()(implicit ec: ExecutionContext): Async[Unit] = Async.unit
+  def stop()(implicit ec: ExecutionContext): Async[Unit] = Async.unit
 
 }

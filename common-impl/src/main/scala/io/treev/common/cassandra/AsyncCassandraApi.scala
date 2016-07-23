@@ -19,14 +19,14 @@ class AsyncCassandraApi(configuration: CassandraApiConfiguration)
 
   import AsyncCassandraApi._
 
-  override def start(implicit ec: ExecutionContext): Async[Unit] =
+  override def start()(implicit ec: ExecutionContext): Async[Unit] =
     Async {
       session
       preparedStatementCache
       ()
     }
 
-  override def stop(implicit ec: ExecutionContext): Async[Unit] =
+  override def stop()(implicit ec: ExecutionContext): Async[Unit] =
     for {
       _ <- Async(() => session.closeAsync().toScalaFuture)
       _ <- Async(() => cluster.closeAsync().toScalaFuture)

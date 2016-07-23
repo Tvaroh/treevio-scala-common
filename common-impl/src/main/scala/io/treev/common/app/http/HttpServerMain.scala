@@ -22,7 +22,7 @@ abstract class HttpServerMain(httpServerConfiguration: HttpServerConfiguration)
 
   import httpServerConfiguration._
 
-  override def start(implicit ec: ExecutionContext): Async[Unit] =
+  override def start()(implicit ec: ExecutionContext): Async[Unit] =
     for {
       _ <- init()
       _ <- Async { () =>
