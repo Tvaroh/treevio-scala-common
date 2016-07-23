@@ -58,7 +58,7 @@ class AsyncCassandraApi(configuration: CassandraApiConfiguration)
   private lazy val cluster: Cluster =
     Cluster.builder()
       .addContactPoints(configuration.hosts.toSeq: _*)
-      .withCredentials(configuration.user, configuration.password)
+      .withCredentials(configuration.username, configuration.password)
       .build()
 
   private lazy val session: Session = cluster.connect()
