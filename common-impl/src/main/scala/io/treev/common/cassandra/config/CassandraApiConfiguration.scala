@@ -1,5 +1,7 @@
 package io.treev.common.cassandra.config
 
-case class CassandraApiConfiguration(hosts: Set[String],
-                                     user: String,
-                                     password: String)
+trait CassandraApiConfiguration {
+  def hosts: Set[String]
+  def user: String
+  def password: String
+}

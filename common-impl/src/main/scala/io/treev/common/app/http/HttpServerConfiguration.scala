@@ -1,5 +1,7 @@
 package io.treev.common.app.http
 
-case class HttpServerConfiguration(serverId: String,
-                                   host: String,
-                                   port: Int)
+trait HttpServerConfiguration {
+  def serverId: String
+  def interface: String
+  def port: Int
+}

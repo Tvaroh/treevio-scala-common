@@ -24,13 +24,13 @@ abstract class HttpServerMain(httpServerConfiguration: HttpServerConfiguration)
     Async { () =>
       logger.info(s"Starting $serverId server...")
 
-      val binding = Http().bindAndHandle(route, host, port)
+      val binding = Http().bindAndHandle(route, interface, port)
 
       binding.onComplete {
         case Success(_) =>
-          logger.info(s"$serverId server started on $host:$port")
+          logger.info(s"$serverId server started on $interface:$port")
         case Failure(t) =>
-          logger.error(s"$serverId server failed to start on $host:$port")
+          logger.error(s"$serverId server failed to start on $interface:$port")
       }
 
       binding.map(_ => ())
