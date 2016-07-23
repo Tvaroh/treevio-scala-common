@@ -2,7 +2,7 @@ package io.treev.common.monitoring
 
 import akka.dispatch._
 import com.typesafe.config.Config
-import io.treev.common.config.ConfigurationComponent._
+import io.treev.common.config.ConfigExtensions._
 
 import scala.concurrent.ExecutionContext
 import scala.concurrent.duration._

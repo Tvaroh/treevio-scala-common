@@ -15,3 +15,10 @@ class ConfigExtensions(val config: Config) extends AnyVal {
     ConfigSupport[T].getValue(config, path)
 
 }
+
+object ConfigExtensions {
+
+  implicit def toConfigExtensions(config: Config): ConfigExtensions =
+    new ConfigExtensions(config)
+
+}
