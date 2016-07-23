@@ -24,7 +24,10 @@ abstract class HttpServerMain(httpServerConfiguration: HttpServerConfiguration)
 
   override def start()(implicit ec: ExecutionContext): Async[Unit] =
     for {
-      _ <- init()
+      _ <- {
+        logger.info(s"Initializing $serverId server...")
+        init()
+      }
       _ <- Async { () =>
         logger.info(s"Starting $serverId server...")
 
