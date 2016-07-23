@@ -38,6 +38,9 @@ class AsyncCassandraApi(configuration: CassandraApiConfiguration)
       result <- execute(preparedStmt.bind(args: _*)).map(f)
     } yield result
 
+  override def executeIgnoreResult(query: String, args: AnyRef*): Empty =
+    execute[Unit](query, args: _*)(_ => ())
+
   override def executeBatch(queries: ParameterizedQuery*): Empty =
     for {
       stmts <-
@@ -79,8 +82,8 @@ object AsyncCassandraApi {
     def toScalaFuture: Future[T] = {
       val p = Promise[T]()
       Futures.addCallback(listenableFuture, new FutureCallback[T] {
-        def onFailure(t: Throwable): Unit = { p.failure(t); () }
-        def onSuccess(result: T): Unit = { p.success(result); () }
+        override def onFailure(t: Throwable): Unit = { p.failure(t); () }
+        override def onSuccess(result: T): Unit = { p.success(result); () }
       })
       p.future
     }
