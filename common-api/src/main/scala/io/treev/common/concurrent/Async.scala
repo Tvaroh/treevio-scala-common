@@ -14,6 +14,8 @@ object Async extends AsyncInstances {
   def pure[A](a: A): Async[A] = new AsyncImpl(() => Future.successful(a))
   def failed[A](t: Throwable): Async[A] = new AsyncImpl(() => Future.failed(t))
 
+  def unit: Async[Unit] = pure(())
+
 }
 
 private class AsyncImpl[A](_run: () => Future[A]) extends Async[A] {

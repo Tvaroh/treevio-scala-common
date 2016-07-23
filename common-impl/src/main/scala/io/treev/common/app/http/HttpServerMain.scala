@@ -1,4 +1,4 @@
-package io.treev.common.app
+package io.treev.common.app.http
 
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
@@ -9,15 +9,16 @@ import io.treev.common.concurrent.Async
 import io.treev.common.logging.Logger
 
 import scala.concurrent.ExecutionContext
+import scala.util.{Failure, Success}
 
-abstract class ServerMain(serverConfiguration: ServerConfiguration)
-                         (implicit actorSystem: ActorSystem, materializer: Materializer)
+abstract class HttpServerMain(httpServerConfiguration: HttpServerConfiguration)
+                             (implicit actorSystem: ActorSystem, materializer: Materializer)
   extends App
     with Lifecycle {
 
   def route: Route
 
-  import serverConfiguration._
+  import httpServerConfiguration._
 
   override def start()(implicit ec: ExecutionContext): Async[Unit] =
     Async { () =>
@@ -25,8 +26,11 @@ abstract class ServerMain(serverConfiguration: ServerConfiguration)
 
       val binding = Http().bindAndHandle(route, host, port)
 
-      binding.foreach { _ =>
-        logger.info(s"$serverId server started on $host:$port")
+      binding.onComplete {
+        case Success(_) =>
+          logger.info(s"$serverId server started on $host:$port")
+        case Failure(t) =>
+          logger.error(s"$serverId server failed to start on $host:$port")
       }
 
       binding.map(_ => ())
