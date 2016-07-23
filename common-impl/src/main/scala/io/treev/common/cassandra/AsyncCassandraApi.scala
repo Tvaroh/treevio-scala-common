@@ -19,17 +19,17 @@ class AsyncCassandraApi(configuration: CassandraApiConfiguration)
 
   import AsyncCassandraApi._
 
-  override def start()(implicit ec: ExecutionContext): Async[Unit] =
+  override def start(implicit ec: ExecutionContext): Async[Unit] =
     Async {
       session
       preparedStatementCache
       ()
     }
 
-  override def stop()(implicit ec: ExecutionContext): Async[Unit] =
+  override def stop(implicit ec: ExecutionContext): Async[Unit] =
     for {
-      _ <- session.closeAsync().toAsync
-      _ <- cluster.closeAsync().toAsync
+      _ <- Async(() => session.closeAsync().toScalaFuture)
+      _ <- Async(() => cluster.closeAsync().toScalaFuture)
     } yield ()
 
   override def execute[T](query: String, args: AnyRef*)(f: ResultSet => T): Single[T] =
@@ -67,11 +67,11 @@ class AsyncCassandraApi(configuration: CassandraApiConfiguration)
 
   private def prepare(query: String): Async[PreparedStatement] =
     preparedStatementCache.caching(query) {
-      session.prepareAsync(query).toAsync
+      Async(() => session.prepareAsync(query).toScalaFuture)
     }
 
   private def execute(stmt: Statement): Async[ResultSet] =
-    session.executeAsync(stmt).toAsync
+    Async(() => session.executeAsync(stmt).toScalaFuture)
 
 }
 
@@ -87,9 +87,6 @@ object AsyncCassandraApi {
       })
       p.future
     }
-
-    def toAsync: Async[T] =
-      Async(() => toScalaFuture)
 
   }
 
