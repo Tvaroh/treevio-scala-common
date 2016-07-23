@@ -17,8 +17,8 @@ abstract class HttpServerMain(httpServerConfiguration: HttpServerConfiguration)
   extends App
     with Lifecycle {
 
-  def route: Route
-  def init(): Async[Unit] = Async.unit
+  protected def route: Route
+  protected def init(): Async[Unit] = Async.unit
 
   import httpServerConfiguration._
 
