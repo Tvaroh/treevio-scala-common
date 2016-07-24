@@ -29,7 +29,7 @@ abstract class HttpServerMain(httpServerConfiguration: HttpServerConfiguration)
         init()
       }
       _ <- Async { () =>
-        logger.info(s"Starting $serverId server...")
+        logger.info(s"Starting $serverId HTTP server...")
 
         val binding = Http().bindAndHandle(route, interface, port)
 
