@@ -4,12 +4,11 @@ import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.server.Route
 import akka.stream.Materializer
-import cats.implicits._
 import io.treev.common.api.Lifecycle
-import io.treev.common.concurrent.Async
 import io.treev.common.logging.Logger
+import monix.eval.Task
+import monix.execution.Scheduler
 
-import scala.concurrent.ExecutionContext
 import scala.util.{Failure, Success}
 
 abstract class HttpServerMain(httpServerConfiguration: HttpServerConfiguration)
@@ -18,17 +17,17 @@ abstract class HttpServerMain(httpServerConfiguration: HttpServerConfiguration)
     with Lifecycle {
 
   protected def route: Route
-  protected def init(): Async[Unit] = Async.unit
+  protected def init(): Task[Unit] = Task.unit
 
   import httpServerConfiguration._
 
-  override def start()(implicit ec: ExecutionContext): Async[Unit] =
+  override def start()(implicit scheduler: Scheduler): Task[Unit] =
     for {
       _ <- {
         logger.info(s"Initializing $serverId server...")
         init()
       }
-      _ <- Async { () =>
+      _ <- Task.fromFuture {
         logger.info(s"Starting $serverId HTTP server...")
 
         val binding = Http().bindAndHandle(route, interface, port)

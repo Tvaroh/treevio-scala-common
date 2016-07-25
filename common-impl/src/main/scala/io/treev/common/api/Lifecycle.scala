@@ -1,12 +1,11 @@
 package io.treev.common.api
 
-import io.treev.common.concurrent.Async
-
-import scala.concurrent.ExecutionContext
+import monix.eval.Task
+import monix.execution.Scheduler
 
 trait Lifecycle {
 
-  def start()(implicit ec: ExecutionContext): Async[Unit] = Async.unit
-  def stop()(implicit ec: ExecutionContext): Async[Unit] = Async.unit
+  def start()(implicit scheduler: Scheduler): Task[Unit] = Task.unit
+  def stop()(implicit scheduler: Scheduler): Task[Unit] = Task.unit
 
 }

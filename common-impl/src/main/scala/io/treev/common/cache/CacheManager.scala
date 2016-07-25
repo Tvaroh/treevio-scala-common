@@ -1,7 +1,7 @@
 package io.treev.common.cache
 
-trait CacheManager[M[_]] {
+trait CacheManager {
 
-  def createInMemoryCache(): InMemoryCacheApi[M]
+  def createInMemoryCache(): InMemoryCacheApi
 
 }

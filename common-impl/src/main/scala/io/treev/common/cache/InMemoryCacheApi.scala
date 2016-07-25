@@ -1,9 +1,9 @@
 package io.treev.common.cache
 
-import io.treev.common.api.Api
+import monix.eval.Task
 
-trait InMemoryCacheApi[M[_]] extends Api[M] {
+trait InMemoryCacheApi {
 
-  def caching[T](keyParts: Any*)(f: => M[T]): Single[T]
+  def caching[T](keyParts: Any*)(f: => Task[T]): Task[T]
 
 }

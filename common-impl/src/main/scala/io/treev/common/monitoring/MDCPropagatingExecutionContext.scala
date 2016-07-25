@@ -2,7 +2,6 @@ package io.treev.common.monitoring
 
 import java.util
 
-import io.treev.common.system.ExecutionContextComponent
 import org.slf4j.MDC
 
 import scala.concurrent.ExecutionContext
@@ -51,14 +50,5 @@ object MDCPropagatingExecutionContext {
 
   def apply(delegate: ExecutionContext): ExecutionContext =
     new MDCPropagatingExecutionContext(delegate)
-
-}
-
-trait MDCPropagatingExecutionContextComponent extends ExecutionContextComponent {
-
-  override implicit val executionContext: ExecutionContext =
-    MDCPropagatingExecutionContext(delegate)
-
-  protected def delegate: ExecutionContext
 
 }
