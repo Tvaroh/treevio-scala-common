@@ -12,6 +12,7 @@ lazy val commonApi =
     .settings(
       libraryDependencies ++= Seq(
         Deps.CatsCore(Versions.Cats),
+        Deps.MonixEval(Versions.Monix), Deps.MonixCats(Versions.Monix),
         Deps.AkkaStream(Versions.Akka),
         Deps.ScalaTest(Versions.ScalaTest) % Test
       )

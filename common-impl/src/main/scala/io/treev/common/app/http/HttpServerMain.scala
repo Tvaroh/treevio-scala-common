@@ -37,7 +37,7 @@ abstract class HttpServerMain(httpServerConfiguration: HttpServerConfiguration)
           case Success(_) =>
             logger.info(s"$serverId server started on $interface:$port")
           case Failure(t) =>
-            logger.error(s"$serverId server failed to start on $interface:$port")
+            logger.error(s"$serverId server failed to start on $interface:$port", t)
         }
 
         binding
