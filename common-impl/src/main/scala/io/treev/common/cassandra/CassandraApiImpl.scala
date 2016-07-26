@@ -44,7 +44,7 @@ class CassandraApiImpl(configuration: CassandraApiConfiguration)
   override def executeBatch(queries: ParameterizedQuery*): Task[Unit] =
     for {
       stmts <-
-        Task.sequence {
+        Task.gather {
           queries.toList.map { parameterizedQuery =>
             import parameterizedQuery._
             prepare(query).map(_.bind(args: _*))
