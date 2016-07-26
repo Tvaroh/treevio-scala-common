@@ -5,7 +5,7 @@ import monix.execution.Scheduler
 
 import scalacache._
 
-class ScalaCacheInMemoryCacheApi(scalaCacheBackend: ScalaCache[NoSerialization])
+class InMemoryCacheApiScalaCache(scalaCacheBackend: ScalaCache[NoSerialization])
                                 (implicit scheduler: Scheduler) extends InMemoryCacheApi {
 
   override def caching[T](keyParts: Any*)(f: => Task[T]): Task[T] =
