@@ -9,8 +9,10 @@ class ScalaCacheInMemoryCacheApi(scalaCacheBackend: ScalaCache[NoSerialization])
                                 (implicit scheduler: Scheduler) extends InMemoryCacheApi {
 
   override def caching[T](keyParts: Any*)(f: => Task[T]): Task[T] =
-    Task.fromFuture {
-      scalacache.caching(keyParts: _*)(f.runAsync)
+    Task.defer {
+      Task.fromFuture {
+        scalacache.caching(keyParts: _*)(f.runAsync)
+      }
     }
 
   private implicit val _scalaCacheBackend: ScalaCache[NoSerialization] = scalaCacheBackend

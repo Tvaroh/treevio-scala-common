@@ -28,7 +28,7 @@ class CassandraApiImpl(configuration: CassandraApiConfiguration)
 
   override def stop()(implicit scheduler: Scheduler): Task[Unit] =
     for {
-      _ <- Task.fromFuture(session.closeAsync().toScalaFuture)
+      _ <- Task.defer(Task.fromFuture(session.closeAsync().toScalaFuture))
       _ <- Task.fromFuture(cluster.closeAsync().toScalaFuture)
     } yield ()
 
@@ -69,11 +69,11 @@ class CassandraApiImpl(configuration: CassandraApiConfiguration)
 
   private def prepare(query: String): Task[PreparedStatement] =
     preparedStatementCache.caching(query) {
-      Task.fromFuture(session.prepareAsync(query).toScalaFuture)
+      Task.defer(Task.fromFuture(session.prepareAsync(query).toScalaFuture))
     }
 
   private def execute(stmt: Statement): Task[ResultSet] =
-    Task.fromFuture(session.executeAsync(stmt).toScalaFuture)
+    Task.defer(Task.fromFuture(session.executeAsync(stmt).toScalaFuture))
 
 }
 

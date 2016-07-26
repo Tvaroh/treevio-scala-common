@@ -23,7 +23,7 @@ abstract class HttpServerMain(httpServerConfiguration: HttpServerConfiguration)
 
   override def start()(implicit scheduler: Scheduler): Task[Unit] =
     for {
-      _ <- {
+      _ <- Task.defer {
         logger.info(s"Initializing $serverId server...")
         init()
       }
