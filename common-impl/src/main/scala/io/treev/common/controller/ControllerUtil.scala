@@ -1,11 +1,11 @@
 package io.treev.common.controller
 
 import akka.http.scaladsl.server.Directives._
-import akka.http.scaladsl.server.Route
+import akka.http.scaladsl.server.{PathMatcher, Route}
 
 trait ControllerUtil {
 
-  def wireControllers(prefix: Option[String] = None)
+  def wireControllers(prefix: Option[PathMatcher[Unit]] = None)
                      (controllers: Controller*): Route = {
     val route = controllers map (_.route) reduce (_ ~ _)
     prefix.fold(route)(pathPrefix(_)(route))
