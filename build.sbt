@@ -5,7 +5,7 @@ import io.treev.sbt.SbtUtil._
 name := "common-parent"
 organization in ThisBuild := s"$DefaultOrganization.common"
 
-CommonSettings
+CommonSettings()
 
 lazy val commonApi =
   DefProject("common-api")
