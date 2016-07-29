@@ -5,7 +5,7 @@ import akka.http.scaladsl.Http
 import akka.http.scaladsl.server.Route
 import akka.stream.Materializer
 import io.treev.common.api.Lifecycle
-import io.treev.common.logging.Logger
+import io.treev.common.logging.Log
 import monix.eval.Task
 import monix.execution.Scheduler
 
@@ -24,25 +24,25 @@ abstract class HttpServerMain(httpServerConfiguration: HttpServerConfiguration)
   override def start()(implicit scheduler: Scheduler): Task[Unit] =
     for {
       _ <- Task.defer {
-        logger.info(s"Initializing $serverId server...")
+        log.info(s"Initializing $serverId server...")
         init()
       }
       _ <- Task.fromFuture {
-        logger.info(s"Starting $serverId HTTP server...")
+        log.info(s"Starting $serverId HTTP server...")
 
         val binding = Http().bindAndHandle(route, interface, port)
 
         binding.onComplete {
           case Success(_) =>
-            logger.info(s"$serverId server started on $interface:$port")
+            log.info(s"$serverId server started on $interface:$port")
           case Failure(t) =>
-            logger.error(s"$serverId server failed to start on $interface:$port", t)
+            log.error(s"$serverId server failed to start on $interface:$port", t)
         }
 
         binding
       }
     } yield ()
 
-  private val logger = Logger[this.type]
+  private val log = Log[this.type]
 
 }

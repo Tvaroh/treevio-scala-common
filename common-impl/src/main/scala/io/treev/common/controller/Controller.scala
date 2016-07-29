@@ -5,7 +5,7 @@ import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server._
 import io.treev.common.exception.ApiException
-import io.treev.common.logging.Logger
+import io.treev.common.logging.Log
 import monix.eval.Task
 import monix.execution.Scheduler
 
@@ -26,14 +26,14 @@ trait Controller
       case Failure(NonFatal(t)) =>
         t match {
           case e: ApiException =>
-            logger.error("Operation failed due to API exception", t)
+            log.error("Operation failed due to API exception", t)
             completeInternalError(e)
           case _ =>
-            logger.error("Operation failed due to an unexpected exception", t)
+            log.error("Operation failed due to an unexpected exception", t)
             complete(StatusCodes.InternalServerError)
         }
     }
 
-  private val logger = Logger[this.type]
+  private val log = Log[this.type]
 
 }
