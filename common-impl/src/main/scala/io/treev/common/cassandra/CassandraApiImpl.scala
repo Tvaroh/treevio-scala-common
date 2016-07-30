@@ -1,5 +1,7 @@
 package io.treev.common.cassandra
 
+import java.net.InetSocketAddress
+
 import com.datastax.driver.core._
 import com.google.common.util.concurrent.{FutureCallback, Futures, ListenableFuture}
 import io.treev.common.api.Lifecycle
@@ -57,11 +59,19 @@ class CassandraApiImpl(configuration: CassandraApiConfiguration)
       }
     } yield ()
 
-  private lazy val cluster: Cluster =
+  private lazy val cluster: Cluster = {
+    val contactPoints = configuration.hosts.toSeq.map { hostWithPort =>
+      hostWithPort.split(':') match {
+        case Array(host) => new InetSocketAddress(host, ProtocolOptions.DEFAULT_PORT)
+        case Array(host, port) => new InetSocketAddress(host, port.toInt)
+      }
+    }
+
     Cluster.builder()
-      .addContactPoints(configuration.hosts.toSeq: _*)
+      .addContactPointsWithPorts(contactPoints: _*)
       .withCredentials(configuration.username, configuration.password)
       .build()
+  }
 
   private lazy val session: Session = cluster.connect()
 
