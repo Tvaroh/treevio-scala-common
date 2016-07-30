@@ -8,6 +8,7 @@ import io.treev.common.api.Lifecycle
 import io.treev.common.cache.CacheManager
 import io.treev.common.cassandra.config.CassandraApiConfiguration
 import io.treev.common.cassandra.model.ParameterizedQuery
+import io.treev.common.util.InetUtil
 import monix.eval.Task
 import monix.execution.Scheduler
 
@@ -61,10 +62,8 @@ class CassandraApiImpl(configuration: CassandraApiConfiguration)
 
   private lazy val cluster: Cluster = {
     val contactPoints = configuration.hosts.toSeq.map { hostWithPort =>
-      hostWithPort.split(':') match {
-        case Array(host) => new InetSocketAddress(host, ProtocolOptions.DEFAULT_PORT)
-        case Array(host, port) => new InetSocketAddress(host, port.toInt)
-      }
+      val (host, port) = InetUtil.splitToHostAndPort(hostWithPort, ProtocolOptions.DEFAULT_PORT)
+      new InetSocketAddress(host, port)
     }
 
     Cluster.builder()
