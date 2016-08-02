@@ -5,6 +5,7 @@ import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server._
 import io.treev.common.exception.ApiException
+import io.treev.common.json.JsonEncoders
 import io.treev.common.logging.Log
 import monix.eval.Task
 import monix.execution.Scheduler
