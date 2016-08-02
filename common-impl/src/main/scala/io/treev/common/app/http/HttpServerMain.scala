@@ -12,7 +12,9 @@ import monix.execution.Scheduler
 import scala.util.{Failure, Success}
 
 abstract class HttpServerMain(httpServerConfiguration: HttpServerConfiguration)
-                             (implicit actorSystem: ActorSystem, materializer: Materializer)
+                             (implicit scheduler: Scheduler,
+                                       actorSystem: ActorSystem,
+                                       materializer: Materializer)
   extends App
     with Lifecycle {
 
@@ -21,7 +23,7 @@ abstract class HttpServerMain(httpServerConfiguration: HttpServerConfiguration)
 
   import httpServerConfiguration._
 
-  override def start()(implicit scheduler: Scheduler): Task[Unit] =
+  override def start(): Task[Unit] =
     for {
       _ <- Task.defer {
         log.info(s"Initializing $serverId server...")

@@ -22,14 +22,14 @@ class CassandraApiImpl(configuration: CassandraApiConfiguration)
 
   import CassandraApiImpl._
 
-  override def start()(implicit scheduler: Scheduler): Task[Unit] =
+  override def start(): Task[Unit] =
     Task {
       session
       preparedStatementCache
       ()
     }
 
-  override def stop()(implicit scheduler: Scheduler): Task[Unit] =
+  override def stop(): Task[Unit] =
     for {
       _ <- Task.defer(Task.fromFuture(session.closeAsync().toScalaFuture))
       _ <- Task.fromFuture(cluster.closeAsync().toScalaFuture)
