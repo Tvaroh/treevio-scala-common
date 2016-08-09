@@ -6,7 +6,7 @@ object LogUtil {
     if (properties.isEmpty) {
       message
     } else {
-      val propertiesString = properties.view.map(pair ⇒ pair._1 + "=" + pair._2.toString).mkString(", ")
+      val propertiesString = properties.view.map(pair => pair._1 + "=" + pair._2.toString).mkString(", ")
       s"$message [$propertiesString]"
     }
 
