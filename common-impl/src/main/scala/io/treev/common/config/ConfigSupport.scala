@@ -13,7 +13,7 @@ trait ConfigSupport[T] {
 
 object ConfigSupport {
 
-  def apply[T : ConfigSupport]: ConfigSupport[T] =
+  def apply[T: ConfigSupport]: ConfigSupport[T] =
     implicitly[ConfigSupport[T]]
 
   implicit object StringConfigSupport extends ConfigSupport[String] {
