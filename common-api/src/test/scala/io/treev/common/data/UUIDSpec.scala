@@ -114,8 +114,7 @@ class UUIDSpec
   private def isSorted[A: Ordering](as: Seq[A]): Boolean =
     as == as.sorted
 
-  private def hasNoDuplicates(as: Seq[Any]): Boolean = {
+  private def hasNoDuplicates(as: Seq[Any]): Boolean =
     as.size == as.distinct.size
-  }
 
 }
