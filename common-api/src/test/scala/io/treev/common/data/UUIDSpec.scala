@@ -25,12 +25,12 @@ class UUIDSpec
 
     whenReady {
       for {
-        ids1 ← f1
-        ids2 ← f2
-        ids3 ← f3
+        ids1 <- f1
+        ids2 <- f2
+        ids3 <- f3
       } yield (ids1, ids2, ids3)
     } {
-      case (ids1, ids2, ids3) ⇒
+      case (ids1, ids2, ids3) =>
         assert(isSorted(ids1))
         assert(isSorted(ids2))
         assert(isSorted(ids3))
@@ -49,12 +49,12 @@ class UUIDSpec
 
     whenReady {
       for {
-        ids1 ← f1
-        ids2 ← f2
-        ids3 ← f3
+        ids1 <- f1
+        ids2 <- f2
+        ids3 <- f3
       } yield (ids1, ids2, ids3)
     } {
-      case (ids1, ids2, ids3) ⇒
+      case (ids1, ids2, ids3) =>
         assert(hasNoDuplicates(ids1 ++ ids2 ++ ids3))
     }
   }
