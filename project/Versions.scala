@@ -1,6 +1,9 @@
+import sbt.Keys.crossScalaVersions
+
 object Versions {
 
-  val Scala = "2.12.1"
+  val Scala = "2.11.8"
+  val CrossScalaVersions = Seq(Scala, "2.12.1")
 
   val TypesafeConfig = "1.3.1"
 

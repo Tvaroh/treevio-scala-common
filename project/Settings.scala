@@ -4,7 +4,8 @@ import sbt.Keys._
 object Settings {
 
   implicit val projectSettings: ProjectSettings = ProjectSettings(
-    scalaVersion := Versions.Scala
+    scalaVersion := Versions.Scala,
+    crossScalaVersions := Versions.CrossScalaVersions
   )
 
 }
