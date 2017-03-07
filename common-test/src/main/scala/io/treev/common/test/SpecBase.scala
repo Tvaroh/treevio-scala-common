@@ -1,7 +1,6 @@
 package io.treev.common.test
 
 import org.scalatest.concurrent.ScalaFutures
-import org.scalatest.mock.MockitoSugar
 import org.scalatest.prop.Checkers
 import org.scalatest.{Matchers, Suite}
 
@@ -10,12 +9,11 @@ trait SpecBase
     with Matchers
     with Checkers
     with ScalaFutures
-    with MockitoSugar
     with PatienceConfig
     with Generators {
 
   protected implicit val effectivePatience: PatienceConfig = defaultPatience
 
-  override implicit val generatorDrivenConfig = PropertyCheckConfig(minSuccessful = 100)
+  override implicit val generatorDrivenConfig = PropertyCheckConfiguration(minSuccessful = 100)
 
 }
