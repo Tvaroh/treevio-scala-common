@@ -1,5 +1,3 @@
-import sbt.Keys.crossScalaVersions
-
 object Versions {
 
   val Scala = "2.11.8"
